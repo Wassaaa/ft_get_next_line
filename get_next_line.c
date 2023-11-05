@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 07:59:37 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 08:01:00 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,3 @@ char	*get_next_line(int fd)
 		next_line = build_line(next_line, buffer, ft_strchr(buffer, '\0'));
 	}
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	int fd = open("myfile", O_RDONLY);
-// 	int i = 0;
-
-// 	while (i++ < 4)
-// 	{
-// 		char *test = get_next_line(fd);
-// 		printf("line: '%s'\n", test);
-// 		free(test);
-// 	}
-// 	close(fd);
-// }
