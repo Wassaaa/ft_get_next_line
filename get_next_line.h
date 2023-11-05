@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:37 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 06:19:34 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 07:33:18 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <sys/resource.h>
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 10
 #endif
+
+# define MAX_FD RLIMIT_NOFILE
 
 int		ft_strlen(const char *str);
 char	*get_next_line(int fd);

@@ -2,6 +2,7 @@
 	"files.associations": {
 		"ft_printf_bonus.h": "c",
 		"ft_printf.h": "c",
-		"limits": "c"
+		"limits": "c",
+		"resource.h": "c"
 	}
 }

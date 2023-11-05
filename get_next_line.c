@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 06:40:00 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 07:36:48 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static char *build_line(char *next_line, char *buffer, char *newline_ptr)
 {
 	next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer + 1);
-	ft_memmove(buffer, newline_ptr + 1, ft_strlen(buffer) + 1);
+	ft_memmove(buffer, newline_ptr + 1, ft_strlen(buffer));
+	if (!next_line)
+		return (free_and_exit(next_line));
 	return (next_line);
 }
 
@@ -27,7 +29,7 @@ char	*get_next_line(int fd)
 	char		*newline_ptr;
 
 	next_line = NULL;
-	if (fd < 0 || read(fd, 0, 0) == -1)
+	if (fd < 0 || read(fd, 0, 0) == -1 || fd > MAX_FD || BUFFER_SIZE <= 0)
 		return (free_and_exit(next_line));
 	while (1)
 	{
