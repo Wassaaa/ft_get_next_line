@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 07:34:33 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 07:59:22 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
-char *append_str_to_str(char *str, char *src, int len)
+char	*append_str_to_str(char *str, char *src, int len)
 {
 	char	*new_str;
 	int		i;
@@ -63,7 +63,7 @@ char	*ft_strchr(const char *s, int c)
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char		*temp;
+	char	*temp;
 
 	if ((!dst && !src) && len != 0)
 		return (NULL);
@@ -79,19 +79,4 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 			*(--temp) = *(char *)(--src);
 	}
 	return (dst);
-}
-
-char	*free_and_exit(char *next_line)
-{
-	if (next_line)
-		free(next_line);
-	return (NULL);
-}
-
-char	*handle_error(char *next_line)
-{
-	if (next_line && *next_line)
-		return (next_line);
-	else
-		return (free_and_exit(next_line));
 }

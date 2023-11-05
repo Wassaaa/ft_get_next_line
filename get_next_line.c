@@ -6,11 +6,26 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 07:55:10 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 07:59:37 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static char	*free_and_exit(char *next_line)
+{
+	if (next_line)
+		free(next_line);
+	return (NULL);
+}
+
+static char	*handle_error(char *next_line)
+{
+	if (next_line && *next_line)
+		return (next_line);
+	else
+		return (free_and_exit(next_line));
+}
 
 static int	bad_params(int fd, char *buffer)
 {
@@ -22,7 +37,7 @@ static int	bad_params(int fd, char *buffer)
 	return (0);
 }
 
-static char *build_line(char *next_line, char *buffer, char *newline_ptr)
+static char	*build_line(char *next_line, char *buffer, char *newline_ptr)
 {
 	next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer + 1);
 	ft_memmove(buffer, newline_ptr + 1, ft_strlen(buffer));
