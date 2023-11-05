@@ -6,11 +6,21 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 07:36:48 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 07:55:10 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static int	bad_params(int fd, char *buffer)
+{
+	if (fd < 0 || read(fd, 0, 0) == -1 || fd > MAX_FD || BUFFER_SIZE <= 0)
+	{
+		buffer[0] = '\0';
+		return (1);
+	}
+	return (0);
+}
 
 static char *build_line(char *next_line, char *buffer, char *newline_ptr)
 {
@@ -29,8 +39,8 @@ char	*get_next_line(int fd)
 	char		*newline_ptr;
 
 	next_line = NULL;
-	if (fd < 0 || read(fd, 0, 0) == -1 || fd > MAX_FD || BUFFER_SIZE <= 0)
-		return (free_and_exit(next_line));
+	if (bad_params(fd, buffer))
+		return (NULL);
 	while (1)
 	{
 		if (buffer[0] == '\0')
