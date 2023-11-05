@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:37 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 02:27:08 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 03:25:52 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@
 
 char	*get_next_line(int fd);
 char	*append_str_to_str(char *str, char *src, int len);
+char	*ft_strchr(const char *s, int c);
+void	*ft_memmove(void *dst, const void *src, size_t len);
 
 #endif

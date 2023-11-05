@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 02:53:52 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 04:10:53 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,53 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	char		*next_line;
-	static int	bytes_read = 0;
+	static char	buffer[BUFFER_SIZE + 1];
 	static int	len = 0;
-	static char	*line_start;
-	int			nl;
+	char		*next_line;
+	char		*newline_ptr;
 
-	nl = 0;
+	next_line = NULL;
 	if (fd < 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	next_line = NULL;
+
 	while (1)
 	{
-		if (!bytes_read)
+		if (len == 0)
 		{
-			buffer = malloc(BUFFER_SIZE + 1);
-			if (!buffer)
+			len = read(fd, buffer, BUFFER_SIZE);
+			if (len <= 0 && !next_line)
 				return (NULL);
-			line_start = buffer;
-			bytes_read = read(fd, buffer, BUFFER_SIZE);
-			buffer[bytes_read] = '\0';
+			buffer[len] = '\0';
+		}
+		newline_ptr = ft_strchr(buffer, '\n');
+		if (newline_ptr)
+		{
+			next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer + 1);
+			ft_memmove(buffer, newline_ptr + 1, len - (newline_ptr - buffer));
+			len -= (newline_ptr - buffer + 1);
+		}
+		else
+		{
+			next_line = append_str_to_str(next_line, buffer, len);
 			len = 0;
 		}
-		if (bytes_read == 0 && len == 0)
-			break ;
-		while (bytes_read)
-		{
-			--bytes_read;
-			if (*buffer == '\n' || !bytes_read)
-			{
-				if (*buffer == '\n')
-					nl = 1;
-				len++;
-				next_line = append_str_to_str(next_line, line_start, len);
-				if (!next_line)
-				{
-					free(buffer);
-					return (NULL);
-				}
-				len = 0;
-				line_start = ++buffer;
-				if (nl)
-					return (next_line);
-				continue ;
-			}
-			buffer++;
-			len++;
-		}
-		next_line = append_str_to_str(next_line, buffer, len);
-		free(buffer);
+		if (newline_ptr)
+			return (next_line);
 	}
-	return (next_line);
 }
 
-// #include <stdio.h>
+#include <stdio.h>
 
-// int	main(void)
-// {
-// 	int fd = open("myfile", O_RDONLY);
-// 	int i = 0;
+int	main(void)
+{
+	int fd = open("myfile", O_RDONLY);
+	int i = 0;
 
-// 	while (i++ < 4)
-// 	{
-// 		char *test = get_next_line(fd);
-// 		printf("line: '%s'\n", test);
-// 		free(test);
-// 	}
-// 	close(fd);
-// }
+	while (i++ < 4)
+	{
+		char *test = get_next_line(fd);
+		printf("line: '%s'\n", test);
+		free(test);
+	}
+	close(fd);
+}

@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 02:33:38 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 03:25:40 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,33 @@ char *append_str_to_str(char *str, char *src, int len)
 	new_str[i] = '\0';
 	free(str);
 	return (new_str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s && *s != (unsigned char)c)
+		s++;
+	if (*s == 0 && (unsigned char)c != 0)
+		return (NULL);
+	return ((char *)s);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	char		*temp;
+
+	if ((!dst && !src) && len != 0)
+		return (NULL);
+	temp = dst;
+	if (dst <= src)
+		while (len--)
+			*temp++ = *(char *)src++;
+	else
+	{
+		temp += len;
+		src += len;
+		while (len--)
+			*(--temp) = *(char *)(--src);
+	}
+	return (dst);
 }
