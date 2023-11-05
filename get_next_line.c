@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 08:01:00 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 18:32:39 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,18 @@ static int	bad_params(int fd, char *buffer)
 
 static char	*build_line(char *next_line, char *buffer, char *newline_ptr)
 {
-	next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer + 1);
-	ft_memmove(buffer, newline_ptr + 1, ft_strlen(buffer));
+	int	bytes_to_move;
+
+	bytes_to_move = 0;
+	if (!*newline_ptr)
+		next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer);
+	else
+		next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer + 1);
+	if (!*newline_ptr)
+		buffer[0] = '\0';
+	else
+		bytes_to_move = ft_strlen(newline_ptr + 1) + 1;
+	ft_memmove(buffer, newline_ptr + 1, bytes_to_move);
 	if (!next_line)
 		return (free_and_exit(next_line));
 	return (next_line);
