@@ -6,13 +6,13 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 05:08:33 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/05 06:19:27 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
 	int	i;
 
@@ -81,10 +81,17 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-char	*free_and_exit(char **next_line, int *len)
+char	*free_and_exit(char *next_line)
 {
-	if (*next_line)
-		free(*next_line);
-	*len = 0;
+	if (next_line)
+		free(next_line);
 	return (NULL);
+}
+
+char	*handle_error(char *next_line)
+{
+	if (next_line && *next_line)
+		return (next_line);
+	else
+		return (free_and_exit(next_line));
 }
