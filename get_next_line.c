@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 18:32:39 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/06 21:43:54 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ static int	bad_params(int fd, char *buffer)
 	return (0);
 }
 
-static char	*build_line(char *next_line, char *buffer, char *newline_ptr)
+static char	*build_line(char *next_line, char *buffer, char *nl_ptr)
 {
 	int	bytes_to_move;
 
 	bytes_to_move = 0;
-	if (!*newline_ptr)
-		next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer);
+	if (!*nl_ptr)
+		next_line = append_str_to_str(next_line, buffer, nl_ptr - buffer);
 	else
-		next_line = append_str_to_str(next_line, buffer, newline_ptr - buffer + 1);
-	if (!*newline_ptr)
+		next_line = append_str_to_str(next_line, buffer, nl_ptr - buffer + 1);
+	if (!*nl_ptr)
 		buffer[0] = '\0';
 	else
-		bytes_to_move = ft_strlen(newline_ptr + 1) + 1;
-	ft_memmove(buffer, newline_ptr + 1, bytes_to_move);
+		bytes_to_move = ft_strlen(nl_ptr + 1) + 1;
+	ft_memmove(buffer, nl_ptr + 1, bytes_to_move);
 	if (!next_line)
 		return (free_and_exit(next_line));
 	return (next_line);
@@ -61,7 +61,7 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE + 1];
 	int			read_len;
 	char		*next_line;
-	char		*newline_ptr;
+	char		*nl_ptr;
 
 	next_line = NULL;
 	if (bad_params(fd, buffer))
@@ -78,9 +78,9 @@ char	*get_next_line(int fd)
 			}
 			buffer[read_len] = '\0';
 		}
-		newline_ptr = ft_strchr(buffer, '\n');
-		if (newline_ptr)
-			return (build_line(next_line, buffer, newline_ptr));
+		nl_ptr = ft_strchr(buffer, '\n');
+		if (nl_ptr)
+			return (build_line(next_line, buffer, nl_ptr));
 		next_line = build_line(next_line, buffer, ft_strchr(buffer, '\0'));
 	}
 }
