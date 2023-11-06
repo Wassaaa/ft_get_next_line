@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 00:29:11 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 01:23:10 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,26 @@ static char	*build_line(char *next_line, char *buffer, char *nl_ptr)
 
 char	*get_next_line(int fd)
 {
-	static char	buf[MAX_FD][BUFFER_SIZE + 1];
+	static char	buf[BUFFER_SIZE + 1];
 	int			read_len;
 	char		*next_line;
 	char		*nl_ptr;
 
 	next_line = NULL;
-	if (bad_params(fd, buf[fd]))
+	if (bad_params(fd, buf))
 		return (NULL);
 	while (1)
 	{
-		if (buf[fd][0] == '\0')
+		if (buf[0] == '\0')
 		{
-			read_len = read(fd, buf[fd], BUFFER_SIZE);
+			read_len = read(fd, buf, BUFFER_SIZE);
 			if (read_len <= 0)
-				return (free_and_exit(next_line, buf[fd], 1));
-			buf[fd][read_len] = '\0';
+				return (free_and_exit(next_line, buf, 1));
+			buf[read_len] = '\0';
 		}
-		nl_ptr = ft_strchr(buf[fd], '\n');
+		nl_ptr = ft_strchr(buf, '\n');
 		if (nl_ptr)
-			return (build_line(next_line, buf[fd], nl_ptr));
-		next_line = build_line(next_line, buf[fd], ft_strchr(buf[fd], '\0'));
+			return (build_line(next_line, buf, nl_ptr));
+		next_line = build_line(next_line, buf, ft_strchr(buf, '\0'));
 	}
 }
