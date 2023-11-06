@@ -1,21 +1,16 @@
-#include "get_next_line.h"
 #include <stdio.h>
-int main(void)
+#include "get_next_line.h"
+
+int	main(void)
 {
-	char filename[] = "testingasdwad";
+	int fd = open("myfile", O_RDONLY);
 	int i = 0;
-	int j = 0;
-	int fd;
-	while (++i)
+
+	while (i++ < 4)
 	{
-		j = 0;
-		while (++j < 255)
-		{
-		filename[i] += 1;
-		fd = open(filename, O_CREAT, O_RDONLY);
-		printf("%d\n", i * j);
-		if (j * i == 2000)
-			printf("here");
-		}
+		char *test = get_next_line(fd);
+		printf("line: '%s'\n", test);
+		free(test);
 	}
+	close(fd);
 }

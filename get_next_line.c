@@ -6,25 +6,22 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/06 21:43:54 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/06 23:57:22 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*free_and_exit(char *next_line)
+static char	*free_and_exit(char *next_line, int handle_err)
 {
+	if (handle_err)
+	{
+		if (next_line && *next_line)
+			return (next_line);
+	}
 	if (next_line)
 		free(next_line);
 	return (NULL);
-}
-
-static char	*handle_error(char *next_line)
-{
-	if (next_line && *next_line)
-		return (next_line);
-	else
-		return (free_and_exit(next_line));
 }
 
 static int	bad_params(int fd, char *buffer)
@@ -52,7 +49,7 @@ static char	*build_line(char *next_line, char *buffer, char *nl_ptr)
 		bytes_to_move = ft_strlen(nl_ptr + 1) + 1;
 	ft_memmove(buffer, nl_ptr + 1, bytes_to_move);
 	if (!next_line)
-		return (free_and_exit(next_line));
+		return (free_and_exit(next_line, 0));
 	return (next_line);
 }
 
@@ -74,7 +71,7 @@ char	*get_next_line(int fd)
 			if (read_len <= 0)
 			{
 				buffer[0] = '\0';
-				return (handle_error(next_line));
+				return (free_and_exit(next_line, 1));
 			}
 			buffer[read_len] = '\0';
 		}
