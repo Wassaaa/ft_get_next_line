@@ -6,16 +6,17 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/06 23:57:22 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 00:08:17 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*free_and_exit(char *next_line, int handle_err)
+static char	*free_and_exit(char *next_line, char * buffer, int handle_err)
 {
 	if (handle_err)
 	{
+		buffer[0] = '\0';
 		if (next_line && *next_line)
 			return (next_line);
 	}
@@ -49,7 +50,7 @@ static char	*build_line(char *next_line, char *buffer, char *nl_ptr)
 		bytes_to_move = ft_strlen(nl_ptr + 1) + 1;
 	ft_memmove(buffer, nl_ptr + 1, bytes_to_move);
 	if (!next_line)
-		return (free_and_exit(next_line, 0));
+		return (free_and_exit(next_line, buffer, 0));
 	return (next_line);
 }
 
@@ -69,10 +70,7 @@ char	*get_next_line(int fd)
 		{
 			read_len = read(fd, buffer, BUFFER_SIZE);
 			if (read_len <= 0)
-			{
-				buffer[0] = '\0';
-				return (free_and_exit(next_line, 1));
-			}
+				return (free_and_exit(next_line, buffer, 1));
 			buffer[read_len] = '\0';
 		}
 		nl_ptr = ft_strchr(buffer, '\n');
