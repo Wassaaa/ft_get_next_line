@@ -13,7 +13,9 @@ int main(void)
 		{
 		filename[i] += 1;
 		fd = open(filename, O_CREAT, O_RDONLY);
-		printf("hmm%d", fd);
+		printf("%d\n", i * j);
+		if (j * i == 2000)
+			printf("here");
 		}
 	}
 }
