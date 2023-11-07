@@ -6,25 +6,29 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 20:39:52 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 20:53:15 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*free_and_exit(t_buffer *line_buffer, int handle_err)
+static char	*free_and_exit(t_buffer *line_buffer, char *buf, int handle_err)
 {
 	char	*final_line;
 
 	if (handle_err)
 	{
-		final_line = malloc(line_buffer->length + 1);
-		if (final_line)
+		if (line_buffer && *line_buffer->data)
 		{
-			ft_memmove(final_line, line_buffer->data, line_buffer->length);
-			final_line[line_buffer->length] = '\0';
-			buffer_free(line_buffer);
-			return (final_line);
+			buf[0] = '\0';
+			final_line = malloc(line_buffer->length + 1);
+			if (final_line)
+			{
+				ft_memmove(final_line, line_buffer->data, line_buffer->length);
+				final_line[line_buffer->length] = '\0';
+				buffer_free(line_buffer);
+				return (final_line);
+			}
 		}
 	}
 	if (line_buffer)
@@ -105,7 +109,7 @@ char	*get_next_line(int fd)
 		{
 			read_len = read(fd, buf, BUFFER_SIZE);
 			if (read_len <= 0)
-				return (free_and_exit(line_buffer, 1));
+				return (free_and_exit(line_buffer, buf, 1));
 			buf[read_len] = '\0';
 		}
 		nl_ptr = ft_strchr(buf, '\n');
@@ -118,6 +122,6 @@ char	*get_next_line(int fd)
 			buf[0] = '\0';
 		}
 	}
-	return (free_and_exit(line_buffer, 1));
+	return (free_and_exit(line_buffer, buf, 1));
 }
 
