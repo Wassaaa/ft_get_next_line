@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/05 07:59:22 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 18:54:43 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,51 @@ int	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+t_buffer	*buffer_init(size_t initial_capacity)
+{
+	t_buffer *buf = malloc(sizeof(t_buffer));
+	if (!buf) return NULL;
+	buf->data = malloc(initial_capacity);
+	if (!buf->data)
+	{
+		free(buf);
+		return NULL;
+	}
+	buf->capacity = initial_capacity;
+	buf->length = 0;
+	return buf;
+}
+
+int	buffer_append(t_buffer *buf, const char *src, size_t len)
+{
+	size_t new_capacity;
+	char *new_data;
+
+	new_capacity = buf->capacity;
+
+	if (buf->length + len > buf->capacity) {
+		while (buf->length + len > new_capacity) {
+			new_capacity *= 2;
+		}
+		new_data = realloc(buf->data, new_capacity);
+		if (!new_data)
+			return (-1);
+		buf->data = new_data;
+		buf->capacity = new_capacity;
+	}
+	ft_memmove(buf->data + buf->length, src, len);
+	buf->length += len;
+	return (0);
+}
+
+void	buffer_free(t_buffer *buf)
+{
+	if (buf) {
+		free(buf->data);
+		free(buf);
+	}
 }
 
 char	*append_str_to_str(char *str, char *src, int len)
