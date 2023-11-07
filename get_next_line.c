@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 20:35:06 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 20:39:52 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static char	*free_and_exit(t_buffer *line_buffer, int handle_err)
 		{
 			ft_memmove(final_line, line_buffer->data, line_buffer->length);
 			final_line[line_buffer->length] = '\0';
+			buffer_free(line_buffer);
+			return (final_line);
 		}
-		buffer_free(line_buffer);
-		return (final_line);
 	}
-	if (line_buffer->data)
+	if (line_buffer)
 		buffer_free(line_buffer);
 	return (NULL);
 }
