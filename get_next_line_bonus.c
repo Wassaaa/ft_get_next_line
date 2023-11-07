@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 00:33:22 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 16:39:57 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ static char	*free_and_exit(char *next_line, char *buffer, int handle_err)
 
 static int	bad_params(int fd, char *buffer)
 {
-	if (fd < 0 || read(fd, 0, 0) == -1 || fd > MAX_FD || BUFFER_SIZE <= 0)
+	if (fd < 0 || read(fd, 0, 0) < 0 || fd > MAX_FD || BUFFER_SIZE <= 0)
 	{
-		buffer[0] = '\0';
+		if (fd >= 0)
+			buffer[0] = '\0';
 		return (1);
 	}
 	return (0);
