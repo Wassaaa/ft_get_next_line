@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 00:29:33 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 17:39:36 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 20:44:10 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ int	main(void)
 	int		fd;
 	int		fd2;
 
-	fd = open("test", O_RDONLY);
+	fd = open("myfile", O_RDONLY);
 	fd2 = open("test2", O_RDONLY);
-	printf("line: '%s'\n", get_next_line(1001));
 	printf("line: '%s'\n", get_next_line(fd));
 	printf("line: '%s'\n", get_next_line(fd));
 	printf("line: '%s'\n", get_next_line(1002));
