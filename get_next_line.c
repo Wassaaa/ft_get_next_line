@@ -6,17 +6,16 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 22:53:38 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/07 23:10:01 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*free_and_exit(t_buffer *line_buffer, char *buf, int handle_err)
+static char	*free_and_exit(t_buffer *line_buffer, int handle_err)
 {
 	char	*final_line;
 
-	buf = buf;
 	if (handle_err && line_buffer)
 	{
 		final_line = malloc(line_buffer->length + 1);
@@ -28,8 +27,8 @@ static char	*free_and_exit(t_buffer *line_buffer, char *buf, int handle_err)
 		buffer_free(line_buffer);
 		return (final_line);
 	}
-	buffer_free(line_buffer);
-	buf[0] = '\0';
+	if (line_buffer && line_buffer->data)
+		buffer_free(line_buffer);
 	return (NULL);
 }
 
@@ -61,7 +60,7 @@ char	*get_next_line(int fd)
 		{
 			read_len = read(fd, buf, BUFFER_SIZE);
 			if (read_len <= 0)
-				return (free_and_exit(line_buffer, buf, 0));
+				return (free_and_exit(line_buffer, 0));
 			buf[read_len] = '\0';
 		}
 		nl_ptr = ft_strchr(buf, '\n');
@@ -74,6 +73,6 @@ char	*get_next_line(int fd)
 			buf[0] = '\0';
 		}
 	}
-	return (free_and_exit(line_buffer, buf, 1));
+	return (free_and_exit(line_buffer, 1));
 }
 
