@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/08 23:25:51 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/08 23:42:00 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	buffer_append(t_buffer *buf, const char *src, size_t len)
 		while (buf->length + len > new_capacity) {
 			new_capacity *= 2;
 		}
-		new_data = malloc(new_capacity);
+		new_data = calloc(1, new_capacity);
 		if (!new_data)
 			return (-1);
 		ft_memmove(new_data, buf->data, buf->length);

@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/08 23:39:13 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/08 23:53:33 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_next_line(int fd)
 	}
 	line_buffer = buffer_init(BUFFER_SIZE);
 	if (!line_buffer)
-		return NULL;
+		return (free_and_exit(line_buffer));
 	while (1) {
 		if (buf[0] == '\0')
 		{
@@ -67,12 +67,12 @@ char	*get_next_line(int fd)
 		nl_ptr = ft_strchr(buf, '\n');
 		if (nl_ptr) {
 			if (buffer_append(line_buffer, buf, nl_ptr - buf + 1) == -1)
-				return (NULL);
+				return (free_and_exit(line_buffer));
 			ft_memmove(buf, nl_ptr + 1, ft_strlen(nl_ptr + 1) + 1);
 			break;
 		} else {
 			if (buffer_append(line_buffer, buf, ft_strlen(buf)) == -1)
-				return (NULL);
+				return (free_and_exit(line_buffer));
 			buf[0] = '\0';
 		}
 	}
