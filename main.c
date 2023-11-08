@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 00:29:33 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 20:26:48 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/08 17:45:36 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@
 int	main(void)
 {
 	int fd = open("test", O_RDONLY);
+	int i = 0;
+	char * test;
 
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
+	while (i++ < 10)
+	{
+		test = get_next_line(fd);
+		printf("%p : %s", test, test);
+		free(test);
+	}
 	// int		fd;
 	// int		fd2;
 

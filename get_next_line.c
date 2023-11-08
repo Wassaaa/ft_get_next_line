@@ -6,17 +6,17 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 23:10:01 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/08 17:34:42 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*free_and_exit(t_buffer *line_buffer, int handle_err)
+static char	*free_and_exit(t_buffer *line_buffer)
 {
 	char	*final_line;
 
-	if (handle_err && line_buffer)
+	if (line_buffer && *line_buffer->data)
 	{
 		final_line = malloc(line_buffer->length + 1);
 		if (final_line)
@@ -60,19 +60,21 @@ char	*get_next_line(int fd)
 		{
 			read_len = read(fd, buf, BUFFER_SIZE);
 			if (read_len <= 0)
-				return (free_and_exit(line_buffer, 0));
+				return (free_and_exit(line_buffer));
 			buf[read_len] = '\0';
 		}
 		nl_ptr = ft_strchr(buf, '\n');
 		if (nl_ptr) {
-			buffer_append(line_buffer, buf, nl_ptr - buf + 1);
+			if (buffer_append(line_buffer, buf, nl_ptr - buf + 1) == -1)
+				return (NULL);
 			ft_memmove(buf, nl_ptr + 1, ft_strlen(nl_ptr + 1) + 1);
 			break;
 		} else {
-			buffer_append(line_buffer, buf, ft_strlen(buf));
+			if (buffer_append(line_buffer, buf, ft_strlen(buf)) == -1)
+				return (NULL);
 			buf[0] = '\0';
 		}
 	}
-	return (free_and_exit(line_buffer, 1));
+	return (free_and_exit(line_buffer));
 }
 

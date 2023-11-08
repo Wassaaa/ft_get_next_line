@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 23:01:32 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/08 16:21:33 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ int	ft_strlen(const char *str)
 t_buffer	*buffer_init(size_t initial_capacity)
 {
 	t_buffer *buf = malloc(sizeof(t_buffer));
-	if (!buf) return NULL;
+	if (!buf)
+		return (NULL);
 	buf->data = malloc(initial_capacity);
 	if (!buf->data)
 	{
 		free(buf);
-		return NULL;
+		return (NULL);
 	}
 	buf->capacity = initial_capacity;
 	buf->length = 0;
-	return buf;
+	return (buf);
 }
 
 int	buffer_append(t_buffer *buf, const char *src, size_t len)
@@ -50,9 +51,11 @@ int	buffer_append(t_buffer *buf, const char *src, size_t len)
 		while (buf->length + len > new_capacity) {
 			new_capacity *= 2;
 		}
-		new_data = realloc(buf->data, new_capacity);
+		new_data = malloc(new_capacity);
 		if (!new_data)
 			return (-1);
+		ft_memmove(new_data, buf->data, buf->length);
+		free(buf->data);
 		buf->data = new_data;
 		buf->capacity = new_capacity;
 	}
