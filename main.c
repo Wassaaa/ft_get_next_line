@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 00:29:33 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 20:44:10 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/09 00:20:13 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,30 @@
 
 int	main(void)
 {
-	int		fd;
-	int		fd2;
+	int fd = open("test", O_RDONLY);
+	int i = 0;
+	char * test;
 
-	fd = open("myfile", O_RDONLY);
-	fd2 = open("test2", O_RDONLY);
-	printf("line: '%s'\n", get_next_line(fd));
-	printf("line: '%s'\n", get_next_line(fd));
-	printf("line: '%s'\n", get_next_line(1002));
-	printf("line: '%s'\n", get_next_line(1003));
-	printf("line: '%s'\n", get_next_line(fd2));
-	printf("line: '%s'\n", get_next_line(fd2));
-	printf("line: '%s'\n", get_next_line(1006));
-	printf("line: '%s'\n", get_next_line(1007));
-	printf("line: '%s'\n", get_next_line(1008));
-	printf("line: '%s'\n", get_next_line(1009));
+	while (i++ < 15)
+	{
+		test = get_next_line(fd);
+		printf("%p : %s", test, test);
+		free(test);
+	}
+	// int		fd;
+	// int		fd2;
+
+	// fd = open("test", O_RDONLY);
+	// fd2 = open("test2", O_RDONLY);
+	// printf("line: '%s'\n", get_next_line(1001));
+	// printf("line: '%s'\n", get_next_line(fd));
+	// printf("line: '%s'\n", get_next_line(fd));
+	// printf("line: '%s'\n", get_next_line(1002));
+	// printf("line: '%s'\n", get_next_line(1003));
+	// printf("line: '%s'\n", get_next_line(fd2));
+	// printf("line: '%s'\n", get_next_line(fd2));
+	// printf("line: '%s'\n", get_next_line(1006));
+	// printf("line: '%s'\n", get_next_line(1007));
+	// printf("line: '%s'\n", get_next_line(1008));
+	// printf("line: '%s'\n", get_next_line(1009));
 }
