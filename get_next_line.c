@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/08 17:34:42 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/08 23:39:13 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static char	*free_and_exit(t_buffer *line_buffer)
 {
 	char	*final_line;
 
-	if (line_buffer && *line_buffer->data)
+	final_line = NULL;
+	if (line_buffer && line_buffer->data && *line_buffer->data)
 	{
 		final_line = malloc(line_buffer->length + 1);
 		if (final_line)
@@ -27,8 +28,8 @@ static char	*free_and_exit(t_buffer *line_buffer)
 		buffer_free(line_buffer);
 		return (final_line);
 	}
-	if (line_buffer && line_buffer->data)
-		buffer_free(line_buffer);
+	free(final_line);
+	buffer_free(line_buffer);
 	return (NULL);
 }
 
@@ -77,4 +78,3 @@ char	*get_next_line(int fd)
 	}
 	return (free_and_exit(line_buffer));
 }
-

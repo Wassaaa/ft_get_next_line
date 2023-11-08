@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/08 16:21:33 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/08 23:25:51 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_buffer	*buffer_init(size_t initial_capacity)
 	t_buffer *buf = malloc(sizeof(t_buffer));
 	if (!buf)
 		return (NULL);
-	buf->data = malloc(initial_capacity);
+	buf->data = calloc(1, initial_capacity);
 	if (!buf->data)
 	{
 		free(buf);
