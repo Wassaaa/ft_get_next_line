@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: aklein <aklein@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/08 23:42:00 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/10 17:55:07 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_strlen(const char *str)
 
 t_buffer	*buffer_init(size_t initial_capacity)
 {
-	t_buffer *buf = malloc(sizeof(t_buffer));
+	t_buffer *buf = my_malloc(sizeof(t_buffer));
 	if (!buf)
 		return (NULL);
 	buf->data = calloc(1, initial_capacity);
@@ -53,7 +53,10 @@ int	buffer_append(t_buffer *buf, const char *src, size_t len)
 		}
 		new_data = calloc(1, new_capacity);
 		if (!new_data)
+		{
+			buffer_free(buf);
 			return (-1);
+		}
 		ft_memmove(new_data, buf->data, buf->length);
 		free(buf->data);
 		buf->data = new_data;

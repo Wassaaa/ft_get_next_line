@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: aklein <aklein@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/07 00:33:31 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/10 17:47:38 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*append_str_to_str(char *str, char *src, int len)
 	char	*new_str;
 	int		i;
 
-	new_str = malloc(len + ft_strlen(str) + 1);
+	new_str = my_malloc(len + ft_strlen(str) + 1);
 	if (!new_str)
 	{
 		free(str);

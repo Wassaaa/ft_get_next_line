@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: aklein <aklein@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:37 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/08 17:47:02 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/10 17:50:12 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@
 # endif
 
 # define MAX_FD 1024
+
+static void* my_malloc(size_t size) {
+    static int counter = 0;
+    counter++;
+
+    // Fail every Nth allocation for testing
+    if (counter % 2 == 0) {
+        return NULL;
+    }
+
+    return malloc(size);
+}
 
 typedef struct s_buffer {
 	char	*data;
