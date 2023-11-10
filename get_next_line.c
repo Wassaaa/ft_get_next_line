@@ -41,13 +41,15 @@ static char	*build_line(char *next_line, char *buffer, char *nl_ptr)
 
 	bytes_to_move = 0;
 	if (!*nl_ptr)
+	{
 		next_line = append_str_to_str(next_line, buffer, nl_ptr - buffer);
-	else
-		next_line = append_str_to_str(next_line, buffer, nl_ptr - buffer + 1);
-	if (!*nl_ptr)
 		buffer[0] = '\0';
+	}
 	else
+	{
+		next_line = append_str_to_str(next_line, buffer, nl_ptr - buffer + 1);
 		bytes_to_move = ft_strlen(nl_ptr + 1) + 1;
+	}
 	ft_memmove(buffer, nl_ptr + 1, bytes_to_move);
 	if (!next_line)
 		return (free_and_exit(next_line, buffer, 0));
