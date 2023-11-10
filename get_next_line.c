@@ -66,7 +66,7 @@ char	*get_next_line(int fd)
 	next_line = NULL;
 	if (bad_params(fd, buf))
 		return (NULL);
-	while (1)
+	while (42)
 	{
 		if (buf[0] == '\0')
 		{
