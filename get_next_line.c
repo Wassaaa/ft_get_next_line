@@ -12,14 +12,10 @@
 
 #include "get_next_line.h"
 
-static char	*free_and_exit(char *next_line, char *buffer, int handle_err)
+static char	*free_and_exit(char *next_line)
 {
-	if (handle_err)
-	{
-		buffer[0] = '\0';
-		if (next_line && *next_line)
-			return (next_line);
-	}
+	if (next_line && *next_line)
+		return (next_line);
 	if (next_line)
 		free(next_line);
 	return (NULL);
@@ -52,7 +48,7 @@ static char	*build_line(char *next_line, char *buffer, char *nl_ptr)
 	}
 	ft_memmove(buffer, nl_ptr + 1, bytes_to_move);
 	if (!next_line)
-		return (free_and_exit(next_line, buffer, 0));
+		return (free_and_exit(next_line));
 	return (next_line);
 }
 
@@ -72,7 +68,7 @@ char	*get_next_line(int fd)
 		{
 			read_len = read(fd, buf, BUFFER_SIZE);
 			if (read_len <= 0)
-				return (free_and_exit(next_line, buf, 1));
+				return (free_and_exit(next_line));
 			buf[read_len] = '\0';
 		}
 		nl_ptr = ft_strchr(buf, '\n');
