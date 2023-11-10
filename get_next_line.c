@@ -53,7 +53,8 @@ char	*get_next_line(int fd)
 	char		*nl_ptr;
 	t_buffer	*line_buffer;
 
-	if (bad_params(fd, buf)) {
+	if (bad_params(fd, buf))
+	{
 		return (NULL);
 	}
 	line_buffer = buffer_init(BUFFER_SIZE);
