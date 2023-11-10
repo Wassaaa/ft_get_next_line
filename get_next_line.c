@@ -21,12 +21,12 @@ static char	*free_and_exit(t_buffer *line_buffer)
 	{
 		final_line = malloc(line_buffer->length + 1);
 		if (!final_line)
-			return (NULL);
-		if (final_line)
 		{
-			ft_memmove(final_line, line_buffer->data, line_buffer->length);
-			final_line[line_buffer->length] = '\0';
+			buffer_free(line_buffer);
+			return (NULL);
 		}
+		ft_memmove(final_line, line_buffer->data, line_buffer->length);
+		final_line[line_buffer->length] = '\0';
 		buffer_free(line_buffer);
 		return (final_line);
 	}
