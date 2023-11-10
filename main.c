@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 00:29:33 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/10 17:39:17 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/10 18:00:42 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(void)
 		printf("%p : %s", test, test);
 		free(test);
 	}
+	close(fd);
 	// int		fd;
 	// int		fd2;
 

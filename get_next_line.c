@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:42 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/10 17:47:38 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/10 18:43:16 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,24 @@ static char	*free_and_exit(t_buffer *line_buffer)
 	char	*final_line;
 
 	final_line = NULL;
-	if (line_buffer && line_buffer->data && *line_buffer->data)
+	if (line_buffer != NULL && line_buffer->data != NULL)
 	{
-		final_line = my_malloc(line_buffer->length + 1);
-		if (!final_line)
+		if (*line_buffer->data)
 		{
+			final_line = my_malloc(line_buffer->length + 1);
+			if (!final_line)
+			{
+				buffer_free(line_buffer);
+				return (NULL);
+			}
+			ft_memmove(final_line, line_buffer->data, line_buffer->length);
+			final_line[line_buffer->length] = '\0';
 			buffer_free(line_buffer);
-			return (NULL);
+			return (final_line);
 		}
-		ft_memmove(final_line, line_buffer->data, line_buffer->length);
-		final_line[line_buffer->length] = '\0';
-		buffer_free(line_buffer);
-		return (final_line);
 	}
 	if (final_line)
-		free(final_line);
+		myfree(final_line);
 	buffer_free(line_buffer);
 	return (NULL);
 }

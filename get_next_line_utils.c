@@ -6,11 +6,19 @@
 /*   By: aklein <aklein@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/10 17:55:07 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/10 18:44:35 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void myfree(void *str)
+{
+	if (str)
+	{
+		free(str);
+	}
+}
 
 int	ft_strlen(const char *str)
 {
@@ -29,10 +37,10 @@ t_buffer	*buffer_init(size_t initial_capacity)
 	t_buffer *buf = my_malloc(sizeof(t_buffer));
 	if (!buf)
 		return (NULL);
-	buf->data = calloc(1, initial_capacity);
+	buf->data = my_calloc(1, initial_capacity);
 	if (!buf->data)
 	{
-		free(buf);
+		myfree(buf);
 		return (NULL);
 	}
 	buf->capacity = initial_capacity;
@@ -51,14 +59,14 @@ int	buffer_append(t_buffer *buf, const char *src, size_t len)
 		while (buf->length + len > new_capacity) {
 			new_capacity *= 2;
 		}
-		new_data = calloc(1, new_capacity);
+		new_data = my_calloc(1, new_capacity);
 		if (!new_data)
 		{
 			buffer_free(buf);
 			return (-1);
 		}
 		ft_memmove(new_data, buf->data, buf->length);
-		free(buf->data);
+		myfree(buf->data);
 		buf->data = new_data;
 		buf->capacity = new_capacity;
 	}
@@ -69,9 +77,16 @@ int	buffer_append(t_buffer *buf, const char *src, size_t len)
 
 void	buffer_free(t_buffer *buf)
 {
-	if (buf) {
-		free(buf->data);
-		free(buf);
+
+	if (buf)
+	{
+		if (buf->data)
+		{
+			myfree(buf->data);
+			myfree(buf);
+			buf->data = NULL;
+		}
+		buf = NULL;
 	}
 }
 

@@ -6,11 +6,19 @@
 /*   By: aklein <aklein@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:03:40 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/10 17:47:38 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/10 18:42:11 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
+
+void myfree(void *str)
+{
+	if (str)
+	{
+		free(str);
+	}
+}
 
 int	ft_strlen(const char *str)
 {
@@ -32,7 +40,7 @@ char	*append_str_to_str(char *str, char *src, int len)
 	new_str = my_malloc(len + ft_strlen(str) + 1);
 	if (!new_str)
 	{
-		free(str);
+		myfree(str);
 		return (NULL);
 	}
 	i = 0;
@@ -48,7 +56,7 @@ char	*append_str_to_str(char *str, char *src, int len)
 		i++;
 	}
 	new_str[i] = '\0';
-	free(str);
+	myfree(str);
 	return (new_str);
 }
 
