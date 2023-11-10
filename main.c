@@ -19,7 +19,7 @@ int	main(void)
 	int i = 0;
 	char * test;
 
-	while (i++ < 15)
+	while (i++ < 2)
 	{
 		test = get_next_line(fd);
 		printf("%p : %s", test, test);

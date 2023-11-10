@@ -26,8 +26,8 @@
 typedef struct s_buffer {
 	char	*data;
 	size_t	capacity;
-	size_t 	length;
-} t_buffer;
+	size_t	length;
+}			t_buffer;
 
 int			ft_strlen(const char *str);
 char		*get_next_line(int fd);

@@ -20,6 +20,8 @@ static char	*free_and_exit(t_buffer *line_buffer)
 	if (line_buffer && line_buffer->data && *line_buffer->data)
 	{
 		final_line = malloc(line_buffer->length + 1);
+		if (!final_line)
+			return (NULL);
 		if (final_line)
 		{
 			ft_memmove(final_line, line_buffer->data, line_buffer->length);
@@ -28,7 +30,8 @@ static char	*free_and_exit(t_buffer *line_buffer)
 		buffer_free(line_buffer);
 		return (final_line);
 	}
-	free(final_line);
+	if (final_line)
+		free(final_line);
 	buffer_free(line_buffer);
 	return (NULL);
 }
