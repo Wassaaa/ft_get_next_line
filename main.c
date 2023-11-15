@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 00:29:33 by aklein            #+#    #+#             */
-/*   Updated: 2023/11/09 00:21:48 by aklein           ###   ########.fr       */
+/*   Updated: 2023/11/15 15:54:07 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(void)
 	// int		fd2;
 
 	// fd = open("test", O_RDONLY);
-	// fd2 = open("test2", O_RDONLY);
+	// fd2 = open("file", O_RDONLY);
 	// printf("line: '%s'\n", get_next_line(1001));
 	// printf("line: '%s'\n", get_next_line(fd));
 	// printf("line: '%s'\n", get_next_line(fd));
